@@ -285,6 +285,7 @@ public class CacheConfigurationBuilderTest {
     assertThat(config.getResourcePools().getPoolForResource(ResourceType.Core.OFFHEAP).getUnit(), Matchers.is(MemoryUnit.MB));
   }
 
+  @SuppressWarnings("deprecation")
   @Test
   public void testSizeOf() {
     CacheConfigurationBuilder<String, String> builder = newCacheConfigurationBuilder(String.class, String.class, heap(10));
@@ -498,6 +499,7 @@ public class CacheConfigurationBuilderTest {
     assertThat(cacheConfiguration.getServiceConfigurations(), not(hasItem(instanceOf(OffHeapDiskStoreConfiguration.class))));
   }
 
+  @SuppressWarnings("deprecation")
   @Test
   public void testWithSizeOfConfig() {
     CacheConfigurationBuilder<Object, Object> builder = newCacheConfigurationBuilder(Object.class, Object.class, heap(10));
@@ -530,6 +532,7 @@ public class CacheConfigurationBuilderTest {
     }
   }
 
+  @SuppressWarnings("deprecation")
   @Test
   public void testWithDefaultSizeOfSettings() {
     CacheConfiguration<Object, Object> cacheConfiguration = newCacheConfigurationBuilder(Object.class, Object.class, heap(10))
