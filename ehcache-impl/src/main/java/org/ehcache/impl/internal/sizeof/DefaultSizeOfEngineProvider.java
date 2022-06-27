@@ -55,6 +55,12 @@ public class DefaultSizeOfEngineProvider implements SizeOfEngineProvider {
     if(!isByteSized) {
       return new NoopSizeOfEngine(); // Noop Size of Engine
     }
+    return getSizeOfEngine();
+  }
+
+  @Deprecated
+  private SizeOfEngine getSizeOfEngine(ServiceConfiguration<?, ?>... serviceConfigs) {
+
     DefaultSizeOfEngineConfiguration config = ServiceUtils.findSingletonAmongst(DefaultSizeOfEngineConfiguration.class, (Object[]) serviceConfigs);
     if(config != null) {
       long maxSize = config.getUnit().toBytes(config.getMaxObjectSize());
@@ -62,4 +68,5 @@ public class DefaultSizeOfEngineProvider implements SizeOfEngineProvider {
     }
     return new DefaultSizeOfEngine(maxObjectGraphSize, maxObjectSize);
   }
+
 }
