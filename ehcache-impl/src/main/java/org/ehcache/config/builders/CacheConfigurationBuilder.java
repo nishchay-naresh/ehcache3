@@ -558,6 +558,8 @@ public class CacheConfigurationBuilder<K, V> implements FluentCacheConfiguration
    *
    * @see #withSizeOfMaxObjectGraph(long)
    * @see #withDefaultSizeOfSettings()
+   *
+   * @deprecated Use {@link #withSizeOfMaxObjectGraph(long) } or {@link #withDefaultSizeOfSettings() } instead
    */
   @Deprecated
   public CacheConfigurationBuilder<K, V> withSizeOfMaxObjectSize(long size, MemoryUnit unit) {

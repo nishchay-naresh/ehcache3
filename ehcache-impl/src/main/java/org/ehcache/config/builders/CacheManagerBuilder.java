@@ -242,6 +242,9 @@ public class CacheManagerBuilder<T extends CacheManager> implements Builder<T> {
    * @param size the max object size
    * @param unit the max object size unit
    * @return a new builder with the added configuration
+   *
+   * @deprecated Use {@link #withDefaultSizeOfMaxObjectGraph(long) } instead
+   *
    */
   @Deprecated
   public CacheManagerBuilder<T> withDefaultSizeOfMaxObjectSize(long size, MemoryUnit unit) {

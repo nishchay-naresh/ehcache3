@@ -49,6 +49,14 @@ public class DefaultSizeOfEngineProvider implements SizeOfEngineProvider {
     //no op
   }
 
+  /**
+   *
+   * @param resourceUnit   type of the unit used to size the store
+   * @param serviceConfigs Array of {@link ServiceConfiguration}s
+   * @return {@link SizeOfEngine}
+   *
+   * @deprecated Use {@link #getNoopSizeOfEngine()} instead
+   */
   @Deprecated
   @Override
   public SizeOfEngine createSizeOfEngine(ResourceUnit resourceUnit, ServiceConfiguration<?, ?>... serviceConfigs) {
@@ -64,6 +72,11 @@ public class DefaultSizeOfEngineProvider implements SizeOfEngineProvider {
     return new DefaultSizeOfEngine(maxObjectGraphSize, maxObjectSize);
   }
 
+  /**
+   *
+   * get {@link NoopSizeOfEngine}
+   * @return Noop Size of Engine
+   */
   @Override
   public SizeOfEngine getNoopSizeOfEngine() {
       return new NoopSizeOfEngine(); // Noop Size of Engine

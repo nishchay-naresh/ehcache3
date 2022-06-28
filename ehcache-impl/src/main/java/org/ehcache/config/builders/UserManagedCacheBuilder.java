@@ -752,6 +752,8 @@ public class UserManagedCacheBuilder<K, V, T extends UserManagedCache<K, V>> imp
    * @param size the maximum mapping size
    * @param unit the memory unit
    * @return a new builder with the added / updated configuration
+   *
+   * @deprecated Use {@link #withSizeOfMaxObjectGraph(long) } instead
    */
   @Deprecated
   public UserManagedCacheBuilder<K, V, T> withSizeOfMaxObjectSize(long size, MemoryUnit unit) {
