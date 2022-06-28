@@ -45,6 +45,7 @@ public class DefaultSizeOfEngineProviderFactoryTest {
     assumeThat(parseInt(getProperty("java.specification.version").split("\\.")[0]), is(lessThan(16)));
   }
 
+  @SuppressWarnings("deprecation")
   @Test
   public void testNullConfiguration() {
     DefaultSizeOfEngineProviderFactory factory = new DefaultSizeOfEngineProviderFactory();
@@ -59,7 +60,7 @@ public class DefaultSizeOfEngineProviderFactoryTest {
   public void testNoopSizeOfEngineConfig() {
     DefaultSizeOfEngineProviderFactory factory = new DefaultSizeOfEngineProviderFactory();
     SizeOfEngineProvider sizeOfEngineProvider = factory.create(null);
-    SizeOfEngine sizeOfEngine = sizeOfEngineProvider.createSizeOfEngine(null, mock(ServiceConfiguration.class));
+    SizeOfEngine sizeOfEngine = sizeOfEngineProvider.getNoopSizeOfEngine();
     assertThat(sizeOfEngineProvider, notNullValue());
     assertThat(sizeOfEngine, notNullValue());
     assertThat(sizeOfEngine, instanceOf(NoopSizeOfEngine.class));

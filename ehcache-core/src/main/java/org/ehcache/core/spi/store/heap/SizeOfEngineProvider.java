@@ -37,4 +37,6 @@ public interface SizeOfEngineProvider extends Service {
    */
 
   SizeOfEngine createSizeOfEngine(ResourceUnit resourceUnit, ServiceConfiguration<?, ?>... serviceConfigs);
+
+  SizeOfEngine getNoopSizeOfEngine();
 }
