@@ -183,7 +183,7 @@ public class Tiering {
     // end::notShared[]
   }
 
-  @SuppressWarnings("deprecation")
+  @Deprecated
   @Test
   public void byteSizedTieredCache() {
     Assume.assumeThat(Integer.parseInt(System.getProperty("java.specification.version").split("\\.")[0]), is(lessThan(16)));

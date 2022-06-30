@@ -499,7 +499,7 @@ public class CacheConfigurationBuilderTest {
     assertThat(cacheConfiguration.getServiceConfigurations(), not(hasItem(instanceOf(OffHeapDiskStoreConfiguration.class))));
   }
 
-  @SuppressWarnings("deprecation")
+  @Deprecated
   @Test
   public void testWithSizeOfConfig() {
     CacheConfigurationBuilder<Object, Object> builder = newCacheConfigurationBuilder(Object.class, Object.class, heap(10));
@@ -532,7 +532,7 @@ public class CacheConfigurationBuilderTest {
     }
   }
 
-  @SuppressWarnings("deprecation")
+  @Deprecated
   @Test
   public void testWithDefaultSizeOfSettings() {
     CacheConfiguration<Object, Object> cacheConfiguration = newCacheConfigurationBuilder(Object.class, Object.class, heap(10))

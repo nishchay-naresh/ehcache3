@@ -49,7 +49,7 @@ public class OverSizeMappingTest {
     assumeThat(parseInt(getProperty("java.specification.version").split("\\.")[0]), is(lessThan(16)));
   }
 
-  @SuppressWarnings("deprecation")
+  @Deprecated
   @Test
   public void testOverSizedObjectGetsReturnedFromLowerTier() {
     CacheManager cacheManager = CacheManagerBuilder.newCacheManagerBuilder()
@@ -83,7 +83,7 @@ public class OverSizeMappingTest {
 
   }
 
-  @SuppressWarnings("deprecation")
+  @Deprecated
   @Test
   public void testOverSizedObjectPutFailsWithOnHeapAsAuthority() {
     CacheManager cacheManager = CacheManagerBuilder.newCacheManagerBuilder()
