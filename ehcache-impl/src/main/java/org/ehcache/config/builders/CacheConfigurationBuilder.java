@@ -54,9 +54,6 @@ import java.util.function.UnaryOperator;
 import static java.util.Objects.requireNonNull;
 import static java.util.stream.Collectors.toList;
 import static org.ehcache.core.config.ExpiryUtils.convertToExpiryPolicy;
-import static org.ehcache.impl.config.store.heap.DefaultSizeOfEngineConfiguration.DEFAULT_MAX_OBJECT_SIZE;
-import static org.ehcache.impl.config.store.heap.DefaultSizeOfEngineConfiguration.DEFAULT_OBJECT_GRAPH_SIZE;
-import static org.ehcache.impl.config.store.heap.DefaultSizeOfEngineConfiguration.DEFAULT_UNIT;
 
 
 /**
@@ -539,9 +536,10 @@ public class CacheConfigurationBuilder<K, V> implements FluentCacheConfiguration
    * @see #withSizeOfMaxObjectSize(long, MemoryUnit)
    * @see #withDefaultSizeOfSettings()
    */
+  @Deprecated
   public CacheConfigurationBuilder<K, V> withSizeOfMaxObjectGraph(long size) {
     return installOrUpdate(
-      () -> new DefaultSizeOfEngineConfiguration(DEFAULT_MAX_OBJECT_SIZE, DEFAULT_UNIT, size),
+      () -> new DefaultSizeOfEngineConfiguration(org.ehcache.impl.config.store.heap.DefaultSizeOfEngineConfiguration.DEFAULT_MAX_OBJECT_SIZE, org.ehcache.impl.config.store.heap.DefaultSizeOfEngineConfiguration.DEFAULT_UNIT, size),
       existing -> new DefaultSizeOfEngineConfiguration(existing.getMaxObjectSize(), existing.getUnit(), size)
     );
   }
@@ -559,12 +557,11 @@ public class CacheConfigurationBuilder<K, V> implements FluentCacheConfiguration
    * @see #withSizeOfMaxObjectGraph(long)
    * @see #withDefaultSizeOfSettings()
    *
-   * @deprecated Use {@link #withSizeOfMaxObjectGraph(long) } or {@link #withDefaultSizeOfSettings() } instead
    */
   @Deprecated
   public CacheConfigurationBuilder<K, V> withSizeOfMaxObjectSize(long size, MemoryUnit unit) {
     return installOrUpdate(
-      () -> new DefaultSizeOfEngineConfiguration(size, unit, DEFAULT_OBJECT_GRAPH_SIZE),
+      () -> new DefaultSizeOfEngineConfiguration(size, unit, org.ehcache.impl.config.store.heap.DefaultSizeOfEngineConfiguration.DEFAULT_OBJECT_GRAPH_SIZE),
       existing -> new DefaultSizeOfEngineConfiguration(size, unit, existing.getMaxObjectGraphSize())
     );
   }
@@ -577,6 +574,7 @@ public class CacheConfigurationBuilder<K, V> implements FluentCacheConfiguration
    * @see #withSizeOfMaxObjectGraph(long)
    * @see #withSizeOfMaxObjectSize(long, MemoryUnit)
    */
+  @Deprecated
   public CacheConfigurationBuilder<K, V> withDefaultSizeOfSettings() {
     return withoutServices(DefaultSizeOfEngineConfiguration.class);
   }

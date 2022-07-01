@@ -23,6 +23,7 @@ import org.ehcache.spi.service.ServiceConfiguration;
 /**
  * {@link Service} responsible for providing {@link SizeOfEngine}.
  */
+@Deprecated
 public interface SizeOfEngineProvider extends Service {
 
   /**
@@ -37,6 +38,4 @@ public interface SizeOfEngineProvider extends Service {
    */
 
   SizeOfEngine createSizeOfEngine(ResourceUnit resourceUnit, ServiceConfiguration<?, ?>... serviceConfigs);
-
-  SizeOfEngine getNoopSizeOfEngine();
 }

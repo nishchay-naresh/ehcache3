@@ -47,9 +47,6 @@ import java.util.function.UnaryOperator;
 import static java.util.Collections.emptySet;
 import static java.util.Collections.unmodifiableSet;
 import static org.ehcache.config.builders.ConfigurationBuilder.newConfigurationBuilder;
-import static org.ehcache.impl.config.store.heap.DefaultSizeOfEngineConfiguration.DEFAULT_MAX_OBJECT_SIZE;
-import static org.ehcache.impl.config.store.heap.DefaultSizeOfEngineConfiguration.DEFAULT_OBJECT_GRAPH_SIZE;
-import static org.ehcache.impl.config.store.heap.DefaultSizeOfEngineConfiguration.DEFAULT_UNIT;
 
 /**
  * The {@code CacheManagerBuilder} enables building cache managers using a fluent style.
@@ -228,9 +225,10 @@ public class CacheManagerBuilder<T extends CacheManager> implements Builder<T> {
    * @param size the max object graph size
    * @return a new builder with the added configuration
    */
+  @Deprecated
   public CacheManagerBuilder<T> withDefaultSizeOfMaxObjectGraph(long size) {
     return ensureThenUpdate(
-      () -> new DefaultSizeOfEngineProviderConfiguration(DEFAULT_MAX_OBJECT_SIZE, DEFAULT_UNIT, DEFAULT_OBJECT_GRAPH_SIZE),
+      () -> new DefaultSizeOfEngineProviderConfiguration(org.ehcache.impl.config.store.heap.DefaultSizeOfEngineConfiguration.DEFAULT_MAX_OBJECT_SIZE, org.ehcache.impl.config.store.heap.DefaultSizeOfEngineConfiguration.DEFAULT_UNIT, org.ehcache.impl.config.store.heap.DefaultSizeOfEngineConfiguration.DEFAULT_OBJECT_GRAPH_SIZE),
       existing -> new DefaultSizeOfEngineProviderConfiguration(existing.getMaxObjectSize(), existing.getUnit(), size)
     );
   }
@@ -243,13 +241,11 @@ public class CacheManagerBuilder<T extends CacheManager> implements Builder<T> {
    * @param unit the max object size unit
    * @return a new builder with the added configuration
    *
-   * @deprecated Use {@link #withDefaultSizeOfMaxObjectGraph(long) } instead
-   *
    */
   @Deprecated
   public CacheManagerBuilder<T> withDefaultSizeOfMaxObjectSize(long size, MemoryUnit unit) {
     return ensureThenUpdate(
-      () -> new DefaultSizeOfEngineProviderConfiguration(DEFAULT_MAX_OBJECT_SIZE, DEFAULT_UNIT, DEFAULT_OBJECT_GRAPH_SIZE),
+      () -> new DefaultSizeOfEngineProviderConfiguration(org.ehcache.impl.config.store.heap.DefaultSizeOfEngineConfiguration.DEFAULT_MAX_OBJECT_SIZE, org.ehcache.impl.config.store.heap.DefaultSizeOfEngineConfiguration.DEFAULT_UNIT, org.ehcache.impl.config.store.heap.DefaultSizeOfEngineConfiguration.DEFAULT_OBJECT_GRAPH_SIZE),
       existing -> new DefaultSizeOfEngineProviderConfiguration(size, unit, existing.getMaxObjectGraphSize())
     );
   }

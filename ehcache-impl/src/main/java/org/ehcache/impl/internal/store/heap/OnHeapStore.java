@@ -66,7 +66,6 @@ import org.ehcache.spi.service.OptionalServiceDependencies;
 import org.ehcache.spi.service.ServiceConfiguration;
 import org.ehcache.spi.service.ServiceDependencies;
 import org.ehcache.core.spi.store.heap.SizeOfEngine;
-import org.ehcache.core.spi.store.heap.SizeOfEngineProvider;
 import org.ehcache.core.statistics.CachingTierOperationOutcomes;
 import org.ehcache.core.statistics.HigherCachingTierOperationOutcomes;
 import org.ehcache.core.statistics.StoreOperationOutcomes;
@@ -1616,9 +1615,9 @@ public class OnHeapStore<K, V> extends BaseStore<K, V> implements HigherCachingT
     invalidationListener.onInvalidation(mappedKey, mappedValue);
   }
 
-  @ServiceDependencies({TimeSourceService.class, CopyProvider.class, SizeOfEngineProvider.class})
-  @OptionalServiceDependencies("org.ehcache.core.spi.service.Statis" +
-    "ticsService")
+  @SuppressWarnings("deprecation")
+  @ServiceDependencies({TimeSourceService.class, CopyProvider.class, org.ehcache.core.spi.store.heap.SizeOfEngineProvider.class})
+  @OptionalServiceDependencies("org.ehcache.core.spi.service.StatisticsService")
   public static class Provider extends BaseStoreProvider implements CachingTier.Provider, HigherCachingTier.Provider {
 
     private final Logger logger = EhcachePrefixLoggerFactory.getLogger(Provider.class);
@@ -1652,6 +1651,7 @@ public class OnHeapStore<K, V> extends BaseStore<K, V> implements HigherCachingT
       return store;
     }
 
+    @SuppressWarnings("deprecation")
     public <K, V> OnHeapStore<K, V> createStoreInternal(Configuration<K, V> storeConfig, StoreEventDispatcher<K, V> eventDispatcher,
                                                         ServiceConfiguration<?, ?>... serviceConfigs) {
       TimeSource timeSource = getServiceProvider().getService(TimeSourceService.class).getTimeSource();
@@ -1661,7 +1661,7 @@ public class OnHeapStore<K, V> extends BaseStore<K, V> implements HigherCachingT
 
       List<Copier<?>> copiers = Arrays.asList(keyCopier, valueCopier);
 
-      SizeOfEngineProvider sizeOfEngineProvider = getServiceProvider().getService(SizeOfEngineProvider.class);
+      org.ehcache.core.spi.store.heap.SizeOfEngineProvider sizeOfEngineProvider = getServiceProvider().getService(org.ehcache.core.spi.store.heap.SizeOfEngineProvider.class);
       SizeOfEngine sizeOfEngine = sizeOfEngineProvider.createSizeOfEngine(
           storeConfig.getResourcePools().getPoolForResource(ResourceType.Core.HEAP).getUnit(), serviceConfigs);
       OnHeapStore<K, V> onHeapStore = new OnHeapStore<>(storeConfig, timeSource, keyCopier, valueCopier, sizeOfEngine, eventDispatcher, ConcurrentHashMap::new, getServiceProvider().getService(StatisticsService.class));
