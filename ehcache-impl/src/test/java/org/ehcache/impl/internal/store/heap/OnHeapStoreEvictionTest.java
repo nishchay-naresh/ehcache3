@@ -186,8 +186,8 @@ public class OnHeapStoreEvictionTest {
         NullStoreEventDispatcher.nullStoreEventDispatcher(), new DefaultStatisticsService());
     }
 
-    @SuppressWarnings("deprecation")
-    public OnHeapStoreForTests(final Configuration<K, V> config, final TimeSource timeSource, final org.ehcache.core.spi.store.heap.SizeOfEngine engine) {
+    public OnHeapStoreForTests(final Configuration<K, V> config, final TimeSource timeSource,
+                               @SuppressWarnings("deprecation") final org.ehcache.core.spi.store.heap.SizeOfEngine engine) {
       super(config, timeSource, IdentityCopier.identityCopier(), IdentityCopier.identityCopier(), engine,
         NullStoreEventDispatcher.nullStoreEventDispatcher(), new DefaultStatisticsService());
     }

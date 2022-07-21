@@ -28,7 +28,7 @@ import org.ehcache.core.spi.store.Store;
  * @author Abhilash
  *
  */
-@SuppressWarnings("deprecation")
+@Deprecated
 public class DefaultSizeOfEngine implements org.ehcache.core.spi.store.heap.SizeOfEngine {
 
   private final long maxObjectGraphSize;
@@ -46,7 +46,6 @@ public class DefaultSizeOfEngine implements org.ehcache.core.spi.store.heap.Size
   }
 
   @Override
-  @SuppressWarnings("deprecation")
   public <K, V> long sizeof(K key, Store.ValueHolder<V> holder) throws org.ehcache.core.spi.store.heap.LimitExceededException {
     try {
       return sizeOf.deepSizeOf(new EhcacheVisitorListener(maxObjectGraphSize, maxObjectSize), key, holder) + this.chmTreeBinOffset + this.onHeapKeyOffset;

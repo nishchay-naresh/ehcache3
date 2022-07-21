@@ -284,7 +284,7 @@ public class CacheConfigurationBuilderTest {
     assertThat(config.getResourcePools().getPoolForResource(ResourceType.Core.OFFHEAP).getUnit(), Matchers.is(MemoryUnit.MB));
   }
 
-  @SuppressWarnings("deprecation")
+  @Deprecated
   @Test
   public void testSizeOf() {
     CacheConfigurationBuilder<String, String> builder = newCacheConfigurationBuilder(String.class, String.class, heap(10));

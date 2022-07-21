@@ -197,15 +197,15 @@ public class OnHeapStore<K, V> extends BaseStore<K, V> implements HigherCachingT
 
   private static final Supplier<Boolean> REPLACE_EQUALS_TRUE = () -> Boolean.TRUE;
 
-
-  @SuppressWarnings("deprecation")
-  public OnHeapStore(Configuration<K, V> config, TimeSource timeSource, Copier<K> keyCopier, Copier<V> valueCopier, org.ehcache.core.spi.store.heap.SizeOfEngine sizeOfEngine, StoreEventDispatcher<K, V> eventDispatcher, StatisticsService statisticsService) {
+  public OnHeapStore(Configuration<K, V> config, TimeSource timeSource, Copier<K> keyCopier, Copier<V> valueCopier,
+                     @SuppressWarnings("deprecation") org.ehcache.core.spi.store.heap.SizeOfEngine sizeOfEngine,
+                     StoreEventDispatcher<K, V> eventDispatcher, StatisticsService statisticsService) {
     this(config, timeSource, keyCopier, valueCopier, sizeOfEngine, eventDispatcher, ConcurrentHashMap::new, statisticsService);
   }
 
-  @SuppressWarnings("deprecation")
   public OnHeapStore(Configuration<K, V> config, TimeSource timeSource, Copier<K> keyCopier, Copier<V> valueCopier,
-                     org.ehcache.core.spi.store.heap.SizeOfEngine sizeOfEngine, StoreEventDispatcher<K, V> eventDispatcher, Supplier<EvictingConcurrentMap<?, ?>> backingMapSupplier, StatisticsService statisticsService) {
+                     @SuppressWarnings("deprecation") org.ehcache.core.spi.store.heap.SizeOfEngine sizeOfEngine,
+                     StoreEventDispatcher<K, V> eventDispatcher, Supplier<EvictingConcurrentMap<?, ?>> backingMapSupplier, StatisticsService statisticsService) {
     super(config, statisticsService);
 
     Objects.requireNonNull(keyCopier, "keyCopier must not be null");
@@ -818,13 +818,12 @@ public class OnHeapStore<K, V> extends BaseStore<K, V> implements HigherCachingT
     }
   }
 
-  @SuppressWarnings("deprecation")
   private void invalidateInGetOrComputeIfAbsent(Backend<K, V> map, K key, ValueHolder<V> value, Fault<V> fault, long now, Duration expiration) {
     map.computeIfPresent(key, (mappedKey, mappedValue) -> {
       if(mappedValue.equals(fault)) {
         try {
           invalidationListener.onInvalidation(key, cloneValueHolder(key, value, now, expiration, false));
-        } catch (org.ehcache.core.spi.store.heap.LimitExceededException ex) {
+        } catch (@SuppressWarnings("deprecation") org.ehcache.core.spi.store.heap.LimitExceededException ex) {
           throw new AssertionError("Sizing is not expected to happen.");
         }
         return null;
@@ -1181,7 +1180,6 @@ public class OnHeapStore<K, V> extends BaseStore<K, V> implements HigherCachingT
     }
   }
 
-  @SuppressWarnings("deprecation")
   @Override
   public ValueHolder<V> computeAndGet(K key, BiFunction<? super K, ? super V, ? extends V> mappingFunction, Supplier<Boolean> replaceEqual, Supplier<Boolean> invokeWriter) throws StoreAccessException {
     checkKey(key);
@@ -1231,7 +1229,7 @@ public class OnHeapStore<K, V> extends BaseStore<K, V> implements HigherCachingT
             if (holder == null) {
               try {
                 valueHeld.set(makeValue(key, computedValue, now, expirationTime, valueCopier, false));
-              } catch (org.ehcache.core.spi.store.heap.LimitExceededException e) {
+              } catch (@SuppressWarnings("deprecation") org.ehcache.core.spi.store.heap.LimitExceededException e) {
                 // Not happening
               }
             } else {
@@ -1421,7 +1419,6 @@ public class OnHeapStore<K, V> extends BaseStore<K, V> implements HigherCachingT
     }
   }
 
-  @SuppressWarnings("deprecation")
   private OnHeapValueHolder<V> newUpdateValueHolder(K key, OnHeapValueHolder<V> oldValue, V newValue, long now, StoreEventSink<K, V> eventSink) {
     Objects.requireNonNull(oldValue);
     Objects.requireNonNull(newValue);
@@ -1449,14 +1446,13 @@ public class OnHeapStore<K, V> extends BaseStore<K, V> implements HigherCachingT
     try {
       holder = makeValue(key, newValue, now, expirationTime, this.valueCopier);
       eventSink.updated(key, oldValue, newValue);
-    } catch (org.ehcache.core.spi.store.heap.LimitExceededException e) {
+    } catch (@SuppressWarnings("deprecation") org.ehcache.core.spi.store.heap.LimitExceededException e) {
       logger.warn(e.getMessage());
       eventSink.removed(key, oldValue);
     }
     return holder;
   }
 
-  @SuppressWarnings("deprecation")
   private OnHeapValueHolder<V> newCreateValueHolder(K key, V value, long now, StoreEventSink<K, V> eventSink) {
     Objects.requireNonNull(value);
 
@@ -1471,13 +1467,12 @@ public class OnHeapStore<K, V> extends BaseStore<K, V> implements HigherCachingT
     try {
       holder = makeValue(key, value, now, expirationTime, this.valueCopier);
       eventSink.created(key, value);
-    } catch (org.ehcache.core.spi.store.heap.LimitExceededException e) {
+    } catch (@SuppressWarnings("deprecation") org.ehcache.core.spi.store.heap.LimitExceededException e) {
       logger.warn(e.getMessage());
     }
     return holder;
   }
 
-  @SuppressWarnings("deprecation")
   private OnHeapValueHolder<V> importValueFromLowerTier(K key, ValueHolder<V> valueHolder, long now, Backend<K, V> backEnd, Fault<V> fault) {
     Duration expiration = strategy.getAccessDuration(key, valueHolder);
 
@@ -1489,7 +1484,7 @@ public class OnHeapStore<K, V> extends BaseStore<K, V> implements HigherCachingT
 
     try{
       return cloneValueHolder(key, valueHolder, now, expiration, true);
-    } catch (org.ehcache.core.spi.store.heap.LimitExceededException e) {
+    } catch (@SuppressWarnings("deprecation") org.ehcache.core.spi.store.heap.LimitExceededException e) {
       logger.warn(e.getMessage());
       invalidateInGetOrComputeIfAbsent(backEnd, key, valueHolder, fault, now, expiration);
       getOrComputeIfAbsentObserver.end(CachingTierOperationOutcomes.GetOrComputeIfAbsentOutcome.FAULT_FAILED);
@@ -1662,7 +1657,6 @@ public class OnHeapStore<K, V> extends BaseStore<K, V> implements HigherCachingT
       return store;
     }
 
-    @SuppressWarnings("deprecation")
     public <K, V> OnHeapStore<K, V> createStoreInternal(Configuration<K, V> storeConfig, StoreEventDispatcher<K, V> eventDispatcher,
                                                         ServiceConfiguration<?, ?>... serviceConfigs) {
       TimeSource timeSource = getServiceProvider().getService(TimeSourceService.class).getTimeSource();

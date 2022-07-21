@@ -98,7 +98,6 @@ import static org.ehcache.core.spi.service.ServiceUtils.findSingletonAmongst;
  * @param <V>  the cache value type
  * @param <T>  the specific {@code UserManagedCache} type
  */
-@SuppressWarnings("deprecation")
 public class UserManagedCacheBuilder<K, V, T extends UserManagedCache<K, V>> implements Builder<T> {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(UserManagedCacheBuilder.class);
@@ -126,8 +125,12 @@ public class UserManagedCacheBuilder<K, V, T extends UserManagedCache<K, V>> imp
   private List<CacheEventListenerConfiguration<?>> eventListenerConfigurations = new ArrayList<>();
   private ExecutorService unOrderedExecutor;
   private ExecutorService orderedExecutor;
+
+  @SuppressWarnings("deprecation")
   private long objectGraphSize = org.ehcache.impl.config.store.heap.DefaultSizeOfEngineConfiguration.DEFAULT_OBJECT_GRAPH_SIZE;
+  @SuppressWarnings("deprecation")
   private long maxObjectSize = org.ehcache.impl.config.store.heap.DefaultSizeOfEngineConfiguration.DEFAULT_MAX_OBJECT_SIZE;
+  @SuppressWarnings("deprecation")
   private MemoryUnit sizeOfUnit = org.ehcache.impl.config.store.heap.DefaultSizeOfEngineConfiguration.DEFAULT_UNIT;
 
 
@@ -748,8 +751,6 @@ public class UserManagedCacheBuilder<K, V, T extends UserManagedCache<K, V>> imp
    * @param size the maximum mapping size
    * @param unit the memory unit
    * @return a new builder with the added / updated configuration
-   *
-   * @deprecated Use {@link #withSizeOfMaxObjectGraph(long) } instead
    */
   @Deprecated
   public UserManagedCacheBuilder<K, V, T> withSizeOfMaxObjectSize(long size, MemoryUnit unit) {
@@ -786,6 +787,7 @@ public class UserManagedCacheBuilder<K, V, T extends UserManagedCache<K, V>> imp
    *
    * @see #using(ServiceCreationConfiguration)
    */
+  @SuppressWarnings("deprecation")
   public UserManagedCacheBuilder<K, V, T> using(Service service) {
     UserManagedCacheBuilder<K, V, T> otherBuilder = new UserManagedCacheBuilder<>(this);
     if (service instanceof org.ehcache.core.spi.store.heap.SizeOfEngineProvider) {
@@ -809,6 +811,7 @@ public class UserManagedCacheBuilder<K, V, T extends UserManagedCache<K, V>> imp
    *
    * @see #using(Service)
    */
+  @SuppressWarnings("deprecation")
   public UserManagedCacheBuilder<K, V, T> using(ServiceCreationConfiguration<?, ?> serviceConfiguration) {
     UserManagedCacheBuilder<K, V, T> otherBuilder = new UserManagedCacheBuilder<>(this);
     if (serviceConfiguration instanceof org.ehcache.impl.config.store.heap.DefaultSizeOfEngineProviderConfiguration) {
@@ -818,6 +821,7 @@ public class UserManagedCacheBuilder<K, V, T extends UserManagedCache<K, V>> imp
     return otherBuilder;
   }
 
+  @Deprecated
   private static void removeAnySizeOfEngine(UserManagedCacheBuilder<?, ?, ?> builder) {
     builder.services.remove(findSingletonAmongst(org.ehcache.core.spi.store.heap.SizeOfEngineProvider.class, builder.services));
     builder.serviceCreationConfigurations.remove(findSingletonAmongst(org.ehcache.impl.config.store.heap.DefaultSizeOfEngineProviderConfiguration.class, builder.serviceCreationConfigurations));

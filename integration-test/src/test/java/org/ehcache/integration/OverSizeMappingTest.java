@@ -42,6 +42,7 @@ import static org.junit.Assume.assumeThat;
  * @author Abhilash
  *
  */
+@Deprecated
 public class OverSizeMappingTest {
 
   @BeforeClass
@@ -49,7 +50,6 @@ public class OverSizeMappingTest {
     assumeThat(parseInt(getProperty("java.specification.version").split("\\.")[0]), is(lessThan(16)));
   }
 
-  @Deprecated
   @Test
   public void testOverSizedObjectGetsReturnedFromLowerTier() {
     CacheManager cacheManager = CacheManagerBuilder.newCacheManagerBuilder()
@@ -83,7 +83,6 @@ public class OverSizeMappingTest {
 
   }
 
-  @Deprecated
   @Test
   public void testOverSizedObjectPutFailsWithOnHeapAsAuthority() {
     CacheManager cacheManager = CacheManagerBuilder.newCacheManagerBuilder()

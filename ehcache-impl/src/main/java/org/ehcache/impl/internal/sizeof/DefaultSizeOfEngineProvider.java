@@ -47,13 +47,6 @@ public class DefaultSizeOfEngineProvider implements org.ehcache.core.spi.store.h
     //no op
   }
 
-  /**
-   *
-   * @param resourceUnit   type of the unit used to size the store
-   * @param serviceConfigs Array of {@link ServiceConfiguration}s
-   * @return {@link org.ehcache.core.spi.store.heap.SizeOfEngine}
-   *
-   */
   @Override
   public org.ehcache.core.spi.store.heap.SizeOfEngine createSizeOfEngine(ResourceUnit resourceUnit, ServiceConfiguration<?, ?>... serviceConfigs) {
     boolean isByteSized = resourceUnit instanceof MemoryUnit;
