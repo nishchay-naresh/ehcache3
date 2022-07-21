@@ -24,13 +24,11 @@ import org.ehcache.config.Configuration;
 import org.ehcache.config.FluentConfigurationBuilder;
 import org.ehcache.config.units.MemoryUnit;
 import org.ehcache.core.EhcacheManager;
-import org.ehcache.core.spi.store.heap.SizeOfEngine;
 import org.ehcache.impl.config.copy.DefaultCopyProviderConfiguration;
 import org.ehcache.impl.config.event.CacheEventDispatcherFactoryConfiguration;
 import org.ehcache.impl.config.loaderwriter.writebehind.WriteBehindProviderConfiguration;
 import org.ehcache.impl.config.persistence.CacheManagerPersistenceConfiguration;
 import org.ehcache.impl.config.serializer.DefaultSerializationProviderConfiguration;
-import org.ehcache.impl.config.store.heap.DefaultSizeOfEngineProviderConfiguration;
 import org.ehcache.impl.config.store.disk.OffHeapDiskStoreProviderConfiguration;
 import org.ehcache.spi.copy.Copier;
 import org.ehcache.spi.serialization.Serializer;
@@ -219,7 +217,7 @@ public class CacheManagerBuilder<T extends CacheManager> implements Builder<T> {
   }
 
   /**
-   * Adds a default {@link SizeOfEngine} configuration, that limits the max object graph to
+   * Adds a default {@link org.ehcache.core.spi.store.heap.SizeOfEngine} configuration, that limits the max object graph to
    * size, to the returned builder.
    *
    * @param size the max object graph size
@@ -228,13 +226,13 @@ public class CacheManagerBuilder<T extends CacheManager> implements Builder<T> {
   @Deprecated
   public CacheManagerBuilder<T> withDefaultSizeOfMaxObjectGraph(long size) {
     return ensureThenUpdate(
-      () -> new DefaultSizeOfEngineProviderConfiguration(org.ehcache.impl.config.store.heap.DefaultSizeOfEngineConfiguration.DEFAULT_MAX_OBJECT_SIZE, org.ehcache.impl.config.store.heap.DefaultSizeOfEngineConfiguration.DEFAULT_UNIT, org.ehcache.impl.config.store.heap.DefaultSizeOfEngineConfiguration.DEFAULT_OBJECT_GRAPH_SIZE),
-      existing -> new DefaultSizeOfEngineProviderConfiguration(existing.getMaxObjectSize(), existing.getUnit(), size)
+      () -> new org.ehcache.impl.config.store.heap.DefaultSizeOfEngineProviderConfiguration(org.ehcache.impl.config.store.heap.DefaultSizeOfEngineConfiguration.DEFAULT_MAX_OBJECT_SIZE, org.ehcache.impl.config.store.heap.DefaultSizeOfEngineConfiguration.DEFAULT_UNIT, org.ehcache.impl.config.store.heap.DefaultSizeOfEngineConfiguration.DEFAULT_OBJECT_GRAPH_SIZE),
+      existing -> new org.ehcache.impl.config.store.heap.DefaultSizeOfEngineProviderConfiguration(existing.getMaxObjectSize(), existing.getUnit(), size)
     );
   }
 
   /**
-   * Adds a default {@link SizeOfEngine} configuration, that limits the max object size, to
+   * Adds a default {@link org.ehcache.core.spi.store.heap.SizeOfEngine} configuration, that limits the max object size, to
    * the returned builder.
    *
    * @param size the max object size
@@ -245,8 +243,8 @@ public class CacheManagerBuilder<T extends CacheManager> implements Builder<T> {
   @Deprecated
   public CacheManagerBuilder<T> withDefaultSizeOfMaxObjectSize(long size, MemoryUnit unit) {
     return ensureThenUpdate(
-      () -> new DefaultSizeOfEngineProviderConfiguration(org.ehcache.impl.config.store.heap.DefaultSizeOfEngineConfiguration.DEFAULT_MAX_OBJECT_SIZE, org.ehcache.impl.config.store.heap.DefaultSizeOfEngineConfiguration.DEFAULT_UNIT, org.ehcache.impl.config.store.heap.DefaultSizeOfEngineConfiguration.DEFAULT_OBJECT_GRAPH_SIZE),
-      existing -> new DefaultSizeOfEngineProviderConfiguration(size, unit, existing.getMaxObjectGraphSize())
+      () -> new org.ehcache.impl.config.store.heap.DefaultSizeOfEngineProviderConfiguration(org.ehcache.impl.config.store.heap.DefaultSizeOfEngineConfiguration.DEFAULT_MAX_OBJECT_SIZE, org.ehcache.impl.config.store.heap.DefaultSizeOfEngineConfiguration.DEFAULT_UNIT, org.ehcache.impl.config.store.heap.DefaultSizeOfEngineConfiguration.DEFAULT_OBJECT_GRAPH_SIZE),
+      existing -> new org.ehcache.impl.config.store.heap.DefaultSizeOfEngineProviderConfiguration(size, unit, existing.getMaxObjectGraphSize())
     );
   }
 

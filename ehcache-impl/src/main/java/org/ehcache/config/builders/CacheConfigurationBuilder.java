@@ -24,7 +24,6 @@ import org.ehcache.config.ResourcePools;
 import org.ehcache.config.units.MemoryUnit;
 import org.ehcache.impl.config.BaseCacheConfiguration;
 import org.ehcache.core.config.store.StoreEventSourceConfiguration;
-import org.ehcache.core.spi.store.heap.SizeOfEngine;
 import org.ehcache.expiry.ExpiryPolicy;
 import org.ehcache.impl.config.copy.DefaultCopierConfiguration;
 import org.ehcache.impl.config.event.DefaultCacheEventDispatcherConfiguration;
@@ -528,7 +527,7 @@ public class CacheConfigurationBuilder<K, V> implements FluentCacheConfiguration
    * Adds or updates the {@link DefaultSizeOfEngineConfiguration} with the specified object graph maximum size to the configured
    * builder.
    * <p>
-   * {@link SizeOfEngine} is what enables the heap tier to be sized in {@link MemoryUnit}.
+   * {@link org.ehcache.core.spi.store.heap.SizeOfEngine} is what enables the heap tier to be sized in {@link MemoryUnit}.
    *
    * @param size the maximum graph size
    * @return a new builder with the added / updated configuration
@@ -548,7 +547,7 @@ public class CacheConfigurationBuilder<K, V> implements FluentCacheConfiguration
    * Adds or updates the {@link DefaultSizeOfEngineConfiguration} with the specified maximum mapping size to the configured
    * builder.
    * <p>
-   * {@link SizeOfEngine} is what enables the heap tier to be sized in {@link MemoryUnit}.
+   * {@link org.ehcache.core.spi.store.heap.SizeOfEngine} is what enables the heap tier to be sized in {@link MemoryUnit}.
    *
    * @param size the maximum mapping size
    * @param unit the memory unit

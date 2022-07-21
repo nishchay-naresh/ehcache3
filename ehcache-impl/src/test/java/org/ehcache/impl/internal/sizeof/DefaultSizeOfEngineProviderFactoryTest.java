@@ -17,7 +17,6 @@ package org.ehcache.impl.internal.sizeof;
 
 import org.ehcache.config.units.MemoryUnit;
 import org.ehcache.spi.service.ServiceConfiguration;
-import org.ehcache.core.spi.store.heap.SizeOfEngine;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
@@ -48,7 +47,7 @@ public class DefaultSizeOfEngineProviderFactoryTest {
   public void testNullConfiguration() {
     DefaultSizeOfEngineProviderFactory factory = new DefaultSizeOfEngineProviderFactory();
     org.ehcache.core.spi.store.heap.SizeOfEngineProvider sizeOfEngineProvider = factory.create(null);
-    SizeOfEngine sizeOfEngine = sizeOfEngineProvider.createSizeOfEngine(MemoryUnit.B, mock(ServiceConfiguration.class));
+    org.ehcache.core.spi.store.heap.SizeOfEngine sizeOfEngine = sizeOfEngineProvider.createSizeOfEngine(MemoryUnit.B, mock(ServiceConfiguration.class));
     assertThat(sizeOfEngineProvider, notNullValue());
     assertThat(sizeOfEngine, notNullValue());
     assertThat(sizeOfEngine, instanceOf(DefaultSizeOfEngine.class));
@@ -58,7 +57,7 @@ public class DefaultSizeOfEngineProviderFactoryTest {
   public void testNoopSizeOfEngineConfig() {
     DefaultSizeOfEngineProviderFactory factory = new DefaultSizeOfEngineProviderFactory();
     org.ehcache.core.spi.store.heap.SizeOfEngineProvider sizeOfEngineProvider = factory.create(null);
-    SizeOfEngine sizeOfEngine = sizeOfEngineProvider.createSizeOfEngine(null, mock(ServiceConfiguration.class));
+    org.ehcache.core.spi.store.heap.SizeOfEngine sizeOfEngine = sizeOfEngineProvider.createSizeOfEngine(null, mock(ServiceConfiguration.class));
     assertThat(sizeOfEngineProvider, notNullValue());
     assertThat(sizeOfEngine, notNullValue());
     assertThat(sizeOfEngine, instanceOf(NoopSizeOfEngine.class));

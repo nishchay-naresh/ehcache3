@@ -21,7 +21,6 @@ import org.ehcache.core.spi.service.ServiceUtils;
 import org.ehcache.spi.service.ServiceProvider;
 import org.ehcache.spi.service.Service;
 import org.ehcache.spi.service.ServiceConfiguration;
-import org.ehcache.core.spi.store.heap.SizeOfEngine;
 
 /**
  * @author Abhilash
@@ -52,11 +51,11 @@ public class DefaultSizeOfEngineProvider implements org.ehcache.core.spi.store.h
    *
    * @param resourceUnit   type of the unit used to size the store
    * @param serviceConfigs Array of {@link ServiceConfiguration}s
-   * @return {@link SizeOfEngine}
+   * @return {@link org.ehcache.core.spi.store.heap.SizeOfEngine}
    *
    */
   @Override
-  public SizeOfEngine createSizeOfEngine(ResourceUnit resourceUnit, ServiceConfiguration<?, ?>... serviceConfigs) {
+  public org.ehcache.core.spi.store.heap.SizeOfEngine createSizeOfEngine(ResourceUnit resourceUnit, ServiceConfiguration<?, ?>... serviceConfigs) {
     boolean isByteSized = resourceUnit instanceof MemoryUnit;
     if(!isByteSized) {
       return new NoopSizeOfEngine(); // Noop Size of Engine

@@ -25,7 +25,6 @@ import org.ehcache.event.EventType;
 import org.ehcache.core.events.StoreEventDispatcher;
 import org.ehcache.spi.loaderwriter.CacheLoaderWriter;
 import org.ehcache.spi.resilience.StoreAccessException;
-import org.ehcache.core.spi.store.heap.LimitExceededException;
 import org.ehcache.expiry.ExpiryPolicy;
 import org.ehcache.impl.copy.IdentityCopier;
 import org.ehcache.impl.internal.events.TestStoreEventDispatcher;
@@ -41,7 +40,6 @@ import org.ehcache.core.spi.store.Store;
 import org.ehcache.core.spi.store.events.StoreEvent;
 import org.ehcache.core.spi.store.events.StoreEventListener;
 import org.ehcache.spi.serialization.Serializer;
-import org.ehcache.core.spi.store.heap.SizeOfEngine;
 import org.hamcrest.Matcher;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
@@ -71,6 +69,7 @@ import static org.mockito.hamcrest.MockitoHamcrest.argThat;
  *
  */
 @Ignore
+@Deprecated
 public class ByteAccountingTest {
 
   @BeforeClass
@@ -78,7 +77,7 @@ public class ByteAccountingTest {
     assumeThat(parseInt(getProperty("java.specification.version").split("\\.")[0]), is(lessThan(16)));
   }
 
-  private static final SizeOfEngine SIZE_OF_ENGINE = new DefaultSizeOfEngine(Long.MAX_VALUE, Long.MAX_VALUE);
+  private static final org.ehcache.core.spi.store.heap.SizeOfEngine SIZE_OF_ENGINE = new DefaultSizeOfEngine(Long.MAX_VALUE, Long.MAX_VALUE);
 
   private static final String KEY = "key";
   private static final String VALUE = "value";
@@ -539,7 +538,7 @@ public class ByteAccountingTest {
     long size = 0L;
     try {
       size = SIZE_OF_ENGINE.sizeof(key, valueHolder);
-    } catch (LimitExceededException e) {
+    } catch (org.ehcache.core.spi.store.heap.LimitExceededException e) {
       fail();
     }
     return size;
@@ -549,7 +548,7 @@ public class ByteAccountingTest {
 
     @SuppressWarnings("unchecked")
     OnHeapStoreForTests(final Configuration<K, V> config, final TimeSource timeSource,
-                        final SizeOfEngine engine, StoreEventDispatcher<K, V> eventDispatcher) {
+                        final org.ehcache.core.spi.store.heap.SizeOfEngine engine, StoreEventDispatcher<K, V> eventDispatcher) {
       super(config, timeSource, IdentityCopier.identityCopier(), IdentityCopier.identityCopier(), engine, eventDispatcher, new DefaultStatisticsService());
     }
 
